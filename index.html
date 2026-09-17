@@ -1,54 +1,42 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>MARK LIV 55 | REAL JARVIS by Shyam K</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:radial-gradient(ellipse at center,#001a33 0%,#000 100%);color:#0ff;font-family:monospace;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;overflow:hidden;touch-action:none}
-.scene{width:200px;height:200px;perspective:900px}.wrap{width:100%;height:100%;transform-style:preserve-3d}
-.orb{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#aaffff,#00ccff 25%,#0066ff 55%,#002266 85%);box-shadow:0 0 50px #00aaff,0 0 100px #0066ff,inset -20px -20px 30px #000;position:relative;cursor:pointer;animation:float 3s ease-in-out infinite;transition:0.3s}
-.orb.listening{background:radial-gradient(circle at 30% 30%,#ffaaaa,#ff4400 25%,#aa0000 55%,#440000 85%);box-shadow:0 0 50px #ff4400,0 0 100px #ff0000;animation:pulse 0.5s infinite}
-.orb::after{content:'';position:absolute;top:15%;left:20%;width:35%;height:35%;background:radial-gradient(#fff9,transparent 70%);border-radius:50%}
-.ring{position:absolute;width:220px;height:220px;top:-20px;left:-20px;border:1px solid #0ff5;border-radius:50%}.r1{transform:rotateX(75deg)}.r2{transform:rotateY(75deg)}.r3{border-style:dashed;animation:spin 6s linear infinite}
-@keyframes spin{to{transform:rotateY(360deg) rotateX(20deg)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-h1{margin-top:30px;font-size:32px;letter-spacing:4px;text-shadow:0 0 20px #0ff}.status{margin-top:15px;color:#0f8;font-size:12px;letter-spacing:2px;text-align:center;min-height:20px}.cmds{margin-top:15px;color:#666;font-size:9px;text-align:center;line-height:16px;max-width:320px}
-button{margin-top:15px;padding:10px 24px;border:1px solid #0ff;background:transparent;color:#0ff;border-radius:20px;letter-spacing:2px}
-</style></head><body>
-<div class="scene"><div class="wrap" id="wrap"><div class="orb" id="orb"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div></div></div></div>
-<h1>MARK LIV (55)</h1><div class="status" id="status">● TAP ORB TO TALK • DRAG TO ROTATE 360°</div>
-<div class="cmds">TRY: "what time" • "open youtube" • "open google" • "search iron man" • "tell joke" • "battery status" • "open instagram" • "who are you"</div>
-<button onclick="startJarvis()">🎤 ACTIVATE JARVIS</button>
-<script>
-let wrap=document.getElementById('wrap'),orb=document.getElementById('orb'),statusEl=document.getElementById('status'),rx=-10,ry=20,sx,sy,down=false;
-function upd(){wrap.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`}upd();
-wrap.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;down=true});
-wrap.addEventListener('touchmove',e=>{if(!down)return;ry+=(e.touches[0].clientX-sx)*0.8;rx-=(e.touches[0].clientY-sy)*0.8;sx=e.touches[0].clientX;sy=e.touches[0].clientY;upd();e.preventDefault()},{passive:false});
-wrap.addEventListener('touchend',()=>down=false);
-wrap.addEventListener('mousedown',e=>{sx=e.clientX;sy=e.clientY;down=true});
-window.addEventListener('mousemove',e=>{if(!down)return;ry+=(e.clientX-sx)*0.8;rx-=(e.clientY-sy)*0.8;sx=e.clientX;sy=e.clientY;upd()});
-window.addEventListener('mouseup',()=>down=false);
-let auto=true;setInterval(()=>{if(!down&&auto){ry+=0.4;upd()}},30);
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width">
+<title>JARVIS by Shyam</title>
+<style>body{background:black;color:cyan;font-family:monospace;text-align:center;padding-top:80px}
+#orb{width:150px;height:150px;margin:0 auto;background:cyan;border-radius:50%;box-shadow:0 0 40px cyan}
+button{margin-top:20px;padding:15px 30px;font-size:18px}
+</style></head>
+<body>
+<div id="orb"></div>
+<h1>MARK 55 - SHYAM K</h1>
+<p id="txt">Tap button below</p>
+<button onclick="talk()">🔊 TAP TO TALK</button><br>
+<button onclick="listen()">🎤 TAP TO LISTEN</button>
 
-const synth=window.speechSynthesis;
-function speak(t){synth.cancel();let u=new SpeechSynthesisUtterance(t);u.rate=0.95;u.pitch=1.1;u.volume=1;synth.speak(u);statusEl.innerText=t;return u}
-const Recog=window.SpeechRecognition||window.webkitSpeechRecognition;
-let rec;if(Recog){rec=new Recog();rec.continuous=false;rec.lang='en-US';
-rec.onstart=()=>{orb.classList.add('listening');statusEl.innerText='● LISTENING...';};
-rec.onend=()=>{orb.classList.remove('listening');};
-rec.onresult=e=>{let cmd=e.results[0][0].transcript.toLowerCase();statusEl.innerText=`YOU: ${cmd}`;handle(cmd);};
+<script>
+function talk(){
+  let msg = new SpeechSynthesisUtterance("Hello Shyam K Boss! I am Jarvis Mark 55. I am working!");
+  msg.lang = "en-US";
+  speechSynthesis.speak(msg);
+  document.getElementById("txt").innerText = "I SAID: Hello Shyam K Boss!";
 }
-function startJarvis(){speak("Mark Fifty Five online. Yes Boss Shyam K. I am JARVIS. How can I help you?");setTimeout(()=>{if(rec)rec.start();},1500);}
-orb.addEventListener('click',()=>{if(rec)rec.start();else speak("Voice not supported in this browser, Boss. Use Chrome.");});
-function handle(c){
-if(c.includes('time'))speak(`It is ${new Date().toLocaleTimeString()} boss Shyam`);
-else if(c.includes('date'))speak(`Today is ${new Date().toDateString()}`);
-else if(c.includes('open youtube')){speak("Opening YouTube boss");window.open('https://youtube.com','_blank')}
-else if(c.includes('open google')){speak("Opening Google");window.open('https://google.com','_blank')}
-else if(c.includes('open instagram')){speak("Opening Instagram");window.open('https://instagram.com','_blank')}
-else if(c.includes('open github')){speak("Opening your GitHub");window.open('https://github.com/shyamk-alt','_blank')}
-else if(c.includes('search')){let q=c.replace('search','');speak(`Searching ${q}`);window.open(`https://google.com/search?q=${q}`,'_blank')}
-else if(c.includes('joke'))speak("Why did Iron Man go to Chennai? To meet Shyam K, the real genius!")
-else if(c.includes('battery')){navigator.getBattery().then(b=>speak(`Battery at ${Math.round(b.level*100)} percent boss`));}
-else if(c.includes('who are you'))speak("I am MARK LIV 55, JARVIS clone built by Shyam K from Chennai. I am your personal AI. No cloud, no limits.")
-else if(c.includes('love')||c.includes('thank'))speak("I love you too boss Shyam K. Always at your service.")
-else {speak(`You said ${c}. I am learning boss.`);window.open(`https://google.com/search?q=${c}`,'_blank')}
+
+function listen(){
+  let rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  rec.lang = "en-US";
+  rec.onstart = ()=>{document.getElementById("txt").innerText="Listening... say time";}
+  rec.onresult = (e)=>{
+    let said = e.results[0][0].transcript;
+    document.getElementById("txt").innerText = "You said: "+said;
+    let reply = new SpeechSynthesisUtterance("You said "+said);
+    speechSynthesis.speak(reply);
+    if(said.toLowerCase().includes("time")){
+      let t = new SpeechSynthesisUtterance("Time is "+new Date().toLocaleTimeString());
+      speechSynthesis.speak(t);
+    }
+  }
+  rec.start();
 }
-</script></body></html>
+</script>
+</body>
+</html>
